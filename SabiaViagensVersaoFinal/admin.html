@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="marca/sabia-icone.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Painel Administrativo</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body id="admin-page">
+
+    
+    <header class="top-header">
+        <div class="header-container">
+            <a href="index.html" class="logo marca-cabecalho" style="text-decoration: none;">
+                    <img src="marca/sabia-horizontal.png" alt="Sabiá Viagens">
+            </a>
+            
+            <div class="header-actions">
+                
+                <div class="auth-wrapper" id="auth-wrapper">
+                    <button class="btn-login" id="btn-login-trigger">
+                        <i class="fa-regular fa-user-circle" id="user-icon-logged"></i>
+                        <span id="login-label">Fazer Login</span>
+                    </button>
+                    
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="user-menu-header">
+                            <strong id="user-full-name">Carlos Silva</strong>
+                            <span id="user-email-disp">carlos@email.com</span>
+                        </div>
+                        <div class="menu-divider"></div>
+
+                        <a href="carrinho.html" class="user-menu-item"><i class="fa-solid fa-plane-ticket"></i> Minhas Viagens</a>
+                        <a href="#" class="user-menu-item"><i class="fa-solid fa-heart"></i> Favoritos</a>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="user-menu-item btn-logout" id="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+                    </div>
+                </div>
+
+                <button class="btn-cart" id="btn-cart-trigger" aria-label="Carrinho" onclick="window.location.href='carrinho.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+    <nav class="admin-secoes" aria-label="Navegação do painel geral">
+        <a href="index.html"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Voltar ao site</a>
+        <a href="#gestao-servicos">Serviços</a>
+        <a href="#gestao-cadastros">Cadastros</a>
+        <a href="#solicitacoes-hoteis">Solicitações</a>
+    </nav>
+
+    <section class="admin-hero">
+        <div class="admin-container">
+            <h1 class="admin-hero-title marca-painel-titulo">
+                <img src="marca/sabia-fundo-escuro.png" alt="" width="355" height="220">Administração geral</h1>
+        </div>
+    </section>
+
+    <main class="admin-main">
+        <div class="admin-container admin-painel-geral">
+            <section id="gestao-servicos" aria-labelledby="titulo-servicos">
+                <h2 id="titulo-servicos">Serviços</h2>
+                <div class="admin-grid admin-grid-servicos">
+                    <article class="admin-card">
+                        <div class="admin-card-icon">
+                            <i class="fa-solid fa-hotel"></i>
+                        </div>
+                        <h3 class="admin-card-title">Hotéis</h3>
+                        <p class="admin-card-desc">Cadastre hotéis aprovados e consulte os estabelecimentos do catálogo.</p>
+                        <div class="admin-card-actions">
+                            <button type="button" class="btn-admin-cadastrar" id="btn-open-cad-hotel">
+                                <i class="fa-solid fa-circle-plus"></i> Cadastrar Hotel
+                            </button>
+                            <button type="button" class="btn-admin-visualizar" id="btn-open-list-hotel">
+                                <i class="fa-solid fa-eye"></i> Visualizar Hotéis
+                            </button>
+                        </div>
+                    </article>
+                    <article class="admin-card">
+                        <div class="admin-card-icon"><i class="fa-solid fa-plane" aria-hidden="true"></i></div>
+                        <h3 class="admin-card-title">Voos</h3>
+                        <p class="admin-card-desc">Cadastre, consulte, edite e exclua voos de todas as companhias.</p>
+                        <div class="admin-card-actions">
+                            <a class="btn-admin-visualizar" href="admin_voo.html">
+                                Gerenciar voos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="gestao-cadastros" aria-labelledby="titulo-cadastros">
+                <h2 id="titulo-cadastros">Cadastros</h2>
+                <div class="admin-grid admin-grid-cadastros">
+                    <article class="admin-card">
+                        <div class="admin-card-icon">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3 class="admin-card-title">Companhias</h3>
+                        <p class="admin-card-desc">Cadastre companhias e vincule seus gestores.</p>
+                        <div class="admin-card-actions">
+                            <button type="button" class="btn-admin-cadastrar" id="btn-open-cad-cia">
+                                <i class="fa-solid fa-circle-plus"></i> Cadastrar Companhia
+                            </button>
+                            <button type="button" class="btn-admin-visualizar" id="btn-open-list-cia">
+                                <i class="fa-solid fa-eye"></i> Visualizar Companhias
+                            </button>
+                        </div>
+                    </article>
+                    <article class="admin-card">
+                        <div class="admin-card-icon">
+                            <i class="fa-solid fa-city"></i>
+                        </div>
+                        <h3 class="admin-card-title">Localidades</h3>
+                        <p class="admin-card-desc">Gerencie as localidades usadas por hotéis e aeroportos do catálogo.</p>
+                        <div class="admin-card-actions">
+                            <button type="button" class="btn-admin-cadastrar" id="btn-open-cad-cidade">
+                                <i class="fa-solid fa-circle-plus"></i> Vincular localidade
+                            </button>
+                            <button type="button" class="btn-admin-visualizar" id="btn-open-list-cidade">
+                                <i class="fa-solid fa-eye"></i> Consultar vínculos
+                            </button>
+                        </div>
+                    </article>
+                    <article class="admin-card">
+                        <div class="admin-card-icon">
+                            <i class="fa-solid fa-plane-departure"></i>
+                        </div>
+                        <h3 class="admin-card-title">Aeroportos</h3>
+                        <p class="admin-card-desc">Cadastre aeroportos e consulte suas cidades e códigos.</p>
+                        <div class="admin-card-actions">
+                            <button type="button" class="btn-admin-cadastrar" id="btn-open-cad-aero">
+                                <i class="fa-solid fa-circle-plus"></i> Cadastrar Aeroporto
+                            </button>
+                            <button type="button" class="btn-admin-visualizar" id="btn-open-list-aero">
+                                <i class="fa-solid fa-eye"></i> Visualizar Aeroportos
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="solicitacoes-hoteis" class="admin-bloco central-solicitacoes" aria-labelledby="titulo-solicitacoes">
+                <div class="admin-central-header">
+                    <div><h2 id="titulo-solicitacoes">Central de solicitações</h2>
+                    <p>Analise as empresas parceiras antes de liberar acesso à administração.</p></div>
+                    <strong class="contador-pendencias"><span id="total-solicitacoes-pendentes">0</span> pendente(s)</strong>
+                </div>
+                <div class="central-ferramentas">
+                    <div class="central-abas" role="tablist" aria-label="Tipo de solicitação">
+                        <button type="button" class="central-aba active" data-aba-solicitacao="hotel" role="tab" aria-selected="true">Hotéis</button>
+                        <button type="button" class="central-aba" data-aba-solicitacao="companhia" role="tab" aria-selected="false">Companhias aéreas</button>
+                    </div>
+                    <label for="filtro-status-solicitacoes">Filtrar por status
+                        <select id="filtro-status-solicitacoes"><option value="pendente">Pendentes</option>
+                            <option value="aprovado">Aprovadas</option><option value="rejeitado">Rejeitadas</option>
+                            <option value="todas">Todas</option></select>
+                    </label>
+                </div>
+                <div id="painel-solicitacoes-hotel" role="tabpanel"><div id="lista-solicitacoes-hotel" class="lista-solicitacoes"></div></div>
+                <div id="painel-solicitacoes-companhia" role="tabpanel" hidden><div id="lista-solicitacoes-companhia" class="lista-solicitacoes"></div></div>
+            </section>
+
+            <section class="admin-bloco admin-manutencao" aria-labelledby="titulo-manutencao">
+                <div>
+                    <h2 id="titulo-manutencao">Manutenção do catálogo</h2>
+                    <p>Recupere os cadastros da base inicial.</p>
+                </div>
+                <button type="button" class="btn-admin-visualizar" id="btn-restaurar-catalogo">Restaurar catálogo inicial</button>
+            </section>
+        </div>
+    </main>
+
+    
+    <footer class="main-footer" id="rodape-sabia">
+        <div class="footer-container">
+            <div class="footer-col footer-col-brand">
+                <a class="logo marca-rodape footer-logo" href="index.html#home" aria-label="Sabiá Viagens, ir para a página inicial">
+                    <img src="marca/sabia-fundo-escuro.png" alt="Sabiá Viagens">
+                </a>
+                <p class="footer-desc">Conectamos pessoas aos seus destinos por meio da tecnologia, simplificando o planejamento de viagens.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#home">Início</a></li>
+                    <li><a href="index.html#passagens">Passagens aéreas</a></li>
+                    <li><a href="index.html#hospedagem">Hospedagens</a></li>
+                    <li><a href="index.html#promocoes">Destinos e destaques</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Sua experiência</h4>
+                <ul class="footer-links">
+                    <li><a href="carrinho.html">Carrinho e reservas simuladas</a></li>
+                    <li><a href="index.html#nossa-essencia">Nossa essência</a></li>
+                    <li><a href="index.html#nossa-historia">Nossa história</a></li>
+                    <li><a href="index.html#nossos-valores">Valores</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Sobre o projeto</h4>
+                <p class="footer-desc">Projeto integrador acadêmico de Desenvolvimento de Sistemas, IFTM. Catálogos e reservas demonstrativos, sem pagamentos reais.</p>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <div class="bottom-container"><span>© 2026 Sabiá Viagens · Projeto acadêmico</span><span>Plataforma demonstrativa</span></div>
+        </div>
+    </footer>
+
+    
+    <button type="button" class="btn-back-to-top" id="btn-back-to-top" title="Voltar ao topo" aria-label="Voltar para o topo">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    
+    <div class="modal-overlay" id="auth-modal-overlay">
+        <div class="auth-modal-card">
+            <button class="btn-close-auth" id="btn-close-auth">&times;</button>
+            
+            <div class="auth-logo-box">
+                <img src="marca/sabia-horizontal.png" alt="Sabiá Viagens" width="510" height="135">
+            </div>
+
+            <form class="auth-form active" id="form-login">
+                <div class="form-field">
+                    <label>CPF ou E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="login-cpf" autocomplete="username" placeholder="CPF ou e-mail cadastrado" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <div class="auth-field-header">
+                        <label>Senha</label>
+                        <a href="#" class="link-forgot-pass" id="link-to-forgot">Esqueci minha senha?</a>
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="login-senha" autocomplete="current-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Entrar</button>
+
+                <p class="auth-switch-text">
+                    Ainda não tem conta? <a href="#" id="link-to-register">Cadastre-se</a>
+                </p>
+            </form>
+
+            <form class="auth-form" id="form-register">
+                <div class="form-field">
+                    <label>Nome Completo</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="reg-nome" placeholder="Seu nome completo" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>CPF</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-id-card input-icon"></i>
+                        <input type="text" id="reg-cpf" inputmode="numeric" placeholder="000.000.000-00" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="reg-email" autocomplete="email" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="reg-senha" autocomplete="new-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="reg-tipo">Tipo de conta</label>
+                    <select id="reg-tipo" class="cadastro-select" required>
+                        <option value="CLIENTE">Cliente</option>
+                        <option value="SOLICITANTE_HOTEL">Responsável por hotel</option>
+                        <option value="SOLICITANTE_COMPANHIA">Responsável por companhia aérea</option>
+                    </select>
+                </div>
+                <div class="cadastro-parceiro" id="reg-campos-hotel" hidden>
+                    <p>Informe os dados do hotel. A gestão só será liberada após aprovação.</p>
+                    <label for="reg-hotel-nome">Nome do hotel</label><input id="reg-hotel-nome" type="text" maxlength="120">
+                    <label for="reg-hotel-cidade">Cidade</label><input id="reg-hotel-cidade" type="text" maxlength="90">
+                    <label for="reg-hotel-pais">País</label><input id="reg-hotel-pais" type="text" maxlength="90">
+                    <label for="reg-hotel-diaria">Diária de referência (R$)</label><input id="reg-hotel-diaria" type="number" min="0" step="0.01">
+                </div>
+                <div class="cadastro-parceiro" id="reg-campos-companhia" hidden>
+                    <p>Cadastre uma nova companhia. Não é possível assumir outra pelo nome.</p>
+                    <label for="reg-cia-nome">Nome da companhia</label><input id="reg-cia-nome" type="text" maxlength="120">
+                    <label for="reg-cia-iata">Código IATA</label><input id="reg-cia-iata" type="text" maxlength="3" placeholder="Ex.: AB">
+                    <label for="reg-cia-pais">País de origem</label><input id="reg-cia-pais" type="text" maxlength="90">
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Criar Conta</button>
+
+                <p class="auth-switch-text">
+                    Já possui uma conta? <a href="#" id="link-to-login">Faça Login</a>
+                </p>
+            </form>
+
+            <form class="auth-form" id="form-forgot">
+                <div style="text-align: center; margin-bottom: 8px;">
+                    <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 4px;">Recuperar Senha</h3>
+                    <p style="font-size: 12px; color: #64748b; margin: 0;">Informe seu CPF ou E-mail e crie uma nova senha de acesso.</p>
+                </div>
+
+                <div class="form-field">
+                    <label>CPF ou E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="text" id="forgot-ident" placeholder="seu@email.com ou 000.000.000-00" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Nova Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="forgot-senha" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Confirmar Nova Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-shield-halved input-icon"></i>
+                        <input type="password" id="forgot-senha-confirm" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Salvar Nova Senha</button>
+
+                <p class="auth-switch-text">
+                    Lembrou a senha? <a href="#" id="link-forgot-to-login">Voltar ao Login</a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+
+    
+
+    
+    <div class="admin-modal-overlay" id="modal-cad-hotel">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-hotel"></i> Cadastrar Novo Hotel</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-cad-hotel">&times;</button>
+            </div>
+            <form id="form-cad-hotel">
+                <div class="admin-form-group">
+                    <label>Nome do Hotel / Resort *</label>
+                    <input type="text" id="cad-hotel-nome" placeholder="Ex: Grand Palace Resort & Spa" required>
+                </div>
+
+                <div class="admin-form-grid">
+                    <div class="admin-form-group">
+                        <label>Cidade *</label>
+                        <select id="cad-hotel-cidade" required>
+                            
+                        </select>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>País *</label>
+                        <input type="text" id="cad-hotel-pais" placeholder="Ex: Brasil, México" required>
+                    </div>
+                </div>
+
+                <div class="admin-form-grid">
+                    <div class="admin-form-group">
+                        <label>Classificação (Estrelas)</label>
+                        <select id="cad-hotel-estrelas">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 Estrelas)</option>
+                            <option value="4" selected>⭐⭐⭐⭐ (4 Estrelas)</option>
+                            <option value="3">⭐⭐⭐ (3 Estrelas)</option>
+                        </select>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Diária Base Estimada (R$) *</label>
+                        <input type="number" id="cad-hotel-diaria" placeholder="Ex: 850" min="1" required>
+                    </div>
+                </div>
+
+                <div class="admin-form-group">
+                    <label>Amenidades (separadas por vírgula)</label>
+                    <input type="text" id="cad-hotel-amenities" placeholder="Ex: All Inclusive, Wi-Fi, Piscina Infinita">
+                </div>
+
+                
+                <div class="admin-user-credentials-box">
+                    <div class="admin-credentials-title">
+                        <i class="fa-solid fa-user-shield"></i> Usuário Gestor do Hotel (ADMHOTEL)
+                    </div>
+                    <p class="admin-credentials-sub">
+                        Crie as credenciais de acesso para o administrador responsável por este hotel gerenciar suas reservas e quartos.
+                    </p>
+                    <div class="admin-form-grid">
+                        <div class="admin-form-group">
+                            <label>Nome do Gestor *</label>
+                            <input type="text" id="admhotel-nome" placeholder="Ex: Roberto Gerente" required>
+                        </div>
+                        <div class="admin-form-group">
+                            <label>CPF do Gestor *</label>
+                            <input type="text" id="admhotel-cpf" placeholder="000.000.000-00" required>
+                        </div>
+                    </div>
+                    <div class="admin-form-grid">
+                        <div class="admin-form-group">
+                            <label>E-mail de Login *</label>
+                            <input type="email" id="admhotel-email" placeholder="gerente@hotel.com" required>
+                        </div>
+                        <div class="admin-form-group">
+                            <label>Senha de Acesso *</label>
+                            <input type="password" id="admhotel-senha" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-admin-submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Hotel e Criar Gestor ADMHOTEL
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-list-hotel">
+        <div class="admin-modal-card wide">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-hotel"></i> Hotéis Cadastrados</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-list-hotel">&times;</button>
+            </div>
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Hotel</th>
+                            <th>Localização</th>
+                            <th>Estrelas</th>
+                            <th>Diária Base</th>
+                            <th>Gestor Responsável (ADMHOTEL)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-hoteis">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-cad-cia">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-building"></i> Cadastrar Nova Companhia Aérea</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-cad-cia">&times;</button>
+            </div>
+            <form id="form-cad-cia">
+                <div class="admin-form-group">
+                    <label>Nome da Companhia Aérea *</label>
+                    <input type="text" id="cad-cia-nome" placeholder="Ex: Tap Air Portugal, Emirates" required>
+                </div>
+
+                <div class="admin-form-grid">
+                    <div class="admin-form-group">
+                        <label>Código IATA *</label>
+                        <input type="text" id="cad-cia-iata" placeholder="Ex: TP, EK, JJ" maxlength="4" style="text-transform: uppercase;" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>País Sede *</label>
+                        <input type="text" id="cad-cia-pais" placeholder="Ex: Portugal, Emirados Árabes" required>
+                    </div>
+                </div>
+
+                
+                <div class="admin-user-credentials-box">
+                    <div class="admin-credentials-title">
+                        <i class="fa-solid fa-user-shield"></i> Usuário Gestor da Companhia (ADMVOO)
+                    </div>
+                    <p class="admin-credentials-sub">
+                        Crie as credenciais de acesso para o gestor responsável por esta companhia aérea administrar as rotas e tarifas de voo.
+                    </p>
+                    <div class="admin-form-grid">
+                        <div class="admin-form-group">
+                            <label>Nome do Gestor *</label>
+                            <input type="text" id="admvoo-nome" placeholder="Ex: Carlos Gestor Aéreo" required>
+                        </div>
+                        <div class="admin-form-group">
+                            <label>CPF do Gestor *</label>
+                            <input type="text" id="admvoo-cpf" placeholder="000.000.000-00" required>
+                        </div>
+                    </div>
+                    <div class="admin-form-grid">
+                        <div class="admin-form-group">
+                            <label>E-mail de Login *</label>
+                            <input type="email" id="admvoo-email" placeholder="gestor@companhia.com" required>
+                        </div>
+                        <div class="admin-form-group">
+                            <label>Senha de Acesso *</label>
+                            <input type="password" id="admvoo-senha" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-admin-submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Companhia e Criar Gestor ADMVOO
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-list-cia">
+        <div class="admin-modal-card wide">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-building"></i> Companhias Aéreas Cadastradas</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-list-cia">&times;</button>
+            </div>
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Companhia</th>
+                            <th>Código IATA</th>
+                            <th>País Sede</th>
+                            <th>Gestor Responsável (ADMVOO)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-cias">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-cad-cidade">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-city"></i> Cadastrar Nova Cidade</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-cad-cidade">&times;</button>
+            </div>
+            <form id="form-cad-cidade">
+                <div class="admin-form-group">
+                    <label for="cad-cid-modo">Como cadastrar</label>
+                    <select id="cad-cid-modo">
+                        <option value="ibge">Consultar municípios brasileiros (IBGE)</option>
+                        <option value="manual">Preencher manualmente</option>
+                    </select>
+                </div>
+                <div id="cad-cid-ibge">
+                    <div class="admin-form-grid">
+                        <div class="admin-form-group">
+                            <label for="ibge-uf">Estado (UF)</label>
+                            <select id="ibge-uf" disabled><option value="">Selecione o estado</option></select>
+                        </div>
+                        <div class="admin-form-group">
+                            <label for="ibge-municipio">Município</label>
+                            <select id="ibge-municipio" disabled><option value="">Selecione o estado primeiro</option></select>
+                        </div>
+                    </div>
+                    <p id="ibge-aviso" role="status"></p>
+                    <button type="button" id="ibge-tentar" class="btn-admin-visualizar" hidden>Tentar novamente</button>
+                </div>
+                <div class="admin-form-group">
+                    <label for="cad-cid-nome">Nome da Cidade *</label>
+                    <input type="text" id="cad-cid-nome" placeholder="Ex: Belo Horizonte, Roma" readonly>
+                </div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-group">
+                        <label for="cad-cid-estado">Estado / Província *</label>
+                        <input type="text" id="cad-cid-estado" placeholder="Ex: Minas Gerais, Lácio" readonly>
+                    </div>
+                    <div class="admin-form-group">
+                        <label for="cad-cid-pais">País *</label>
+                        <input type="text" id="cad-cid-pais" placeholder="Ex: Brasil, Itália" readonly>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-admin-submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Cidade
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-list-cidade">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-city"></i> Cidades Cadastradas</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-list-cidade">&times;</button>
+            </div>
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cidade</th>
+                            <th>Estado / Província</th>
+                            <th>País</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-cidades">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-cad-aero">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-plane-departure"></i> Cadastrar Novo Aeroporto</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-cad-aero">&times;</button>
+            </div>
+            <form id="form-cad-aero">
+                <div class="admin-form-group">
+                    <label>Nome do Aeroporto *</label>
+                    <input type="text" id="cad-aero-nome" placeholder="Ex: Aeroporto Internacional de Confins - Tancredo Neves" required>
+                </div>
+                <div class="admin-form-grid">
+                    <div class="admin-form-group">
+                        <label>Código IATA *</label>
+                        <input type="text" id="cad-aero-codigo" placeholder="Ex: CNF, FCO" maxlength="4" style="text-transform: uppercase;" required>
+                    </div>
+                    <div class="admin-form-group">
+                        <label>Cidade Atendida *</label>
+                        <select id="cad-aero-cidade" required>
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="admin-form-group">
+                    <label>País *</label>
+                    <input type="text" id="cad-aero-pais" placeholder="Ex: Brasil, Itália" required>
+                </div>
+
+                <button type="submit" class="btn-admin-submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar Aeroporto
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="admin-modal-overlay" id="modal-list-aero">
+        <div class="admin-modal-card wide">
+            <div class="admin-modal-header">
+                <h3 class="admin-modal-title"><i class="fa-solid fa-plane-departure"></i> Aeroportos Cadastrados</h3>
+                <button type="button" class="btn-close-admin-modal" data-close="modal-list-aero">&times;</button>
+            </div>
+            <div class="admin-table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Aeroporto</th>
+                            <th>Código IATA</th>
+                            <th>Cidade Atendida</th>
+                            <th>País</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-aeroportos">
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="cidades-ibge.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

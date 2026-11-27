@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="marca/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Sua próxima viagem começa aqui</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="detalhes.css">
+</head>
+<body>
+
+    
+    <header class="top-header">
+        <div class="header-container">
+            <a href="index.html" class="logo marca-cabecalho" style="text-decoration: none;">
+                    <img src="marca/sabia-horizontal.png" alt="Sabiá Viagens">
+            </a>
+            
+            <div class="header-actions">
+                
+                <div class="auth-wrapper" id="auth-wrapper">
+                    <button class="btn-login" id="btn-login-trigger">
+                        <i class="fa-regular fa-user-circle" id="user-icon-logged"></i>
+                        <span id="login-label">Fazer Login</span>
+                    </button>
+                    
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="user-menu-header">
+                            <strong id="user-full-name">Carlos Silva</strong>
+                            <span id="user-email-disp">carlos@email.com</span>
+                        </div>
+                        <div class="menu-divider"></div>
+
+                        <a href="carrinho.html" class="user-menu-item"><i class="fa-solid fa-plane-ticket"></i> Minhas Viagens</a>
+                        <a href="#" class="user-menu-item"><i class="fa-solid fa-heart"></i> Favoritos</a>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="user-menu-item btn-logout" id="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+                    </div>
+                </div>
+
+                <button class="btn-cart" id="btn-cart-trigger" aria-label="Carrinho" onclick="window.location.href='carrinho.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html#home" class="nav-item active" data-view="home">
+                <div class="icon-box"><i class="fa-solid fa-house"></i></div>
+                <span>Home</span>
+            </a>
+            <a href="index.html#passagens" class="nav-item" data-view="passagens">
+                <div class="icon-box"><i class="fa-solid fa-plane"></i></div>
+                <span>Passagens</span>
+            </a>
+            <a href="index.html#hospedagem" class="nav-item" data-view="hospedagem">
+                <div class="icon-box"><i class="fa-solid fa-bed"></i></div>
+                <span>Hospedagem</span>
+            </a>
+            <a href="index.html#promocoes" class="nav-item" data-view="promocoes">
+                <div class="icon-box"><i class="fa-solid fa-percent"></i></div>
+                <span>Promoções</span>
+            </a>
+        </div>
+    </nav>
+
+    
+    <section class="hero-section">
+        <div class="hero-title-container">
+            <h2 class="hero-header-title" id="hero-header-title">Home</h2>
+        </div>
+
+        <div class="search-card">
+            
+            <div class="search-tabs">
+                <button class="tab-btn active" data-tab="ida-volta">Ida e volta</button>
+                <button class="tab-btn filled" data-tab="so-ida">Só ida</button>
+                <button class="tab-btn filled" data-tab="varios-destinos">Vários destinos</button>
+                <div class="tab-divider"></div>
+                <button class="tab-btn filled" data-tab="voo-hotel">Voo + Hotel</button>
+            </div>
+
+            
+            <div id="search-form-container">
+                
+                
+                <div class="search-form-row" id="form-row-main">
+                    
+                    
+                    <div class="form-group field-location" id="field-location-flights">
+                        <div class="input-subgroup autocomplete-wrapper">
+                            <label for="input-origem" class="sr-only">Origem</label>
+                            <input type="text" id="input-origem" placeholder="Origem" value="" autocomplete="off">
+                            <div class="autocomplete-dropdown" id="suggest-origem"></div>
+                        </div>
+                        
+                        <button type="button" class="btn-swap-location" id="btn-swap" title="Trocar Origem e Destino">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        </button>
+                        
+                        <div class="input-subgroup autocomplete-wrapper">
+                            <label for="input-destino" class="sr-only">Destino</label>
+                            <input type="text" id="input-destino" placeholder="Destino" value="" autocomplete="off">
+                            <div class="autocomplete-dropdown" id="suggest-destino"></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group field-hosp-type" id="field-hosp-type" style="display: none;">
+                        <div class="custom-select-wrapper full-width">
+                            <select id="select-hosp-type" class="hosp-select">
+                                <option value="todos">Todos</option>
+                                <option value="hoteis">Hotéis</option>
+                                <option value="resorts">Resorts</option>
+                                <option value="pousadas">Pousadas</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group field-hosp-dest" id="field-hosp-dest" style="display: none;">
+                        <div class="input-subgroup autocomplete-wrapper">
+                            <label for="input-hosp-dest" class="sr-only">Destino do Hotel</label>
+                            <input type="text" id="input-hosp-dest" placeholder="Destino" value="" autocomplete="off">
+                            <div class="autocomplete-dropdown" id="suggest-hosp-dest"></div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group field-dates" id="dates-trigger">
+                        <div class="date-box" id="ida-box">
+                            <span class="date-label-sub">Ida</span>
+                            <span class="date-value" id="disp-ida">Selecione</span>
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <div class="field-divider" id="dates-field-divider"></div>
+                        <div class="date-box" id="volta-box">
+                            <span class="date-label-sub">Volta</span>
+                            <span class="date-value" id="disp-volta">Selecione</span>
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group field-travelers" id="travelers-trigger">
+                        <div class="travelers-info">
+                            <span class="label" id="label-travelers-title">Viajantes</span>
+                            <span class="value" id="disp-travelers">1 Viajante</span>
+                        </div>
+                    </div>
+
+                    
+                    <button type="button" class="btn-buscar" id="btn-buscar">
+                        <span>Buscar</span>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                </div>
+
+                
+                <div class="multi-dest-container" id="form-row-multi" style="display: none;">
+                    <div class="multi-leg-list" id="multi-leg-list">
+                        
+                    </div>
+                    <div class="multi-actions-row">
+                        <button type="button" class="btn-add-leg" id="btn-add-leg">
+                            <i class="fa-solid fa-plus"></i> Adicionar outro destino
+                        </button>
+                        <button type="button" class="btn-buscar" id="btn-buscar-multi">
+                            <span>Buscar Vários Destinos</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <div class="popup-modal calendar-modal" id="calendar-modal">
+                <div class="calendar-header">
+                    <button class="cal-nav prev" id="cal-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="cal-titles">
+                        <span class="month-title" id="month-title-1">Julho de 2026</span>
+                        <span class="month-title" id="month-title-2">Agosto de 2026</span>
+                    </div>
+                    <button class="cal-nav next" id="cal-next"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="calendar-body">
+                    <div class="month-grid" id="month-1">
+                        <div class="weekdays">
+                            <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+                        </div>
+                        <div class="days-container" id="days-month-1"></div>
+                    </div>
+
+                    <div class="month-grid" id="month-2">
+                        <div class="weekdays">
+                            <span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+                        </div>
+                        <div class="days-container" id="days-month-2"></div>
+                    </div>
+                </div>
+
+                <div class="calendar-footer">
+                    <button class="btn-confirm-cal" id="btn-confirm-cal">Confirmar</button>
+                </div>
+            </div>
+
+            
+            <div class="popup-modal travelers-modal" id="travelers-modal">
+                <h3 class="modal-title">Viajantes</h3>
+                
+                <div class="counter-list">
+                    <div class="counter-item">
+                        <div class="item-info">
+                            <span class="type-name">Adultos</span>
+                            <span class="type-sub">Acima de 12 anos</span>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="btn-cnt minus" data-type="adults"><i class="fa-solid fa-minus"></i></button>
+                            <span class="cnt-value" id="cnt-adults">1</span>
+                            <button class="btn-cnt plus" data-type="adults"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="counter-item">
+                        <div class="item-info">
+                            <span class="type-name">Crianças</span>
+                            <span class="type-sub">De 2 até 11 anos</span>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="btn-cnt minus" data-type="children"><i class="fa-solid fa-minus"></i></button>
+                            <span class="cnt-value" id="cnt-children">0</span>
+                            <button class="btn-cnt plus" data-type="children"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="counter-item">
+                        <div class="item-info">
+                            <span class="type-name">Bebês</span>
+                            <span class="type-sub">De 0 até 23 meses</span>
+                        </div>
+                        <div class="counter-controls">
+                            <button class="btn-cnt minus" data-type="infants"><i class="fa-solid fa-minus"></i></button>
+                            <span class="cnt-value" id="cnt-infants">0</span>
+                            <button class="btn-cnt plus" data-type="infants"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="class-selector-section">
+                    <label class="class-label">Classes</label>
+                    <div class="custom-select-wrapper">
+                        <select id="select-class" class="class-select">
+                            <option value="Todas as classes">Todas as classes</option>
+                            <option value="Econômica">Econômica</option>
+                            <option value="Executiva">Executiva</option>
+                            <option value="Primeira Classe">Primeira Classe</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <div class="modal-footer-actions">
+                    <button type="button" class="btn-limpar" id="btn-limpar-travelers">Limpar</button>
+                    <button type="button" class="btn-aplicar" id="btn-aplicar-travelers">Aplicar</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    
+    <!-- Passagens -->
+    <section class="main-view-section" id="view-passagens" style="display: none;">
+        <div class="view-container">
+            <div class="passagens-promo-grid">
+                
+
+                <div class="passagens-banner-wide">
+                    <div class="banner-badge-72h">
+                        <span class="badge-num">72h</span>
+                        <span class="badge-txt">Ofertas</span>
+                    </div>
+                    <div class="banner-family-img-box">
+                        <img src="https://images.unsplash.com/photo-1576267423445-b2e0074d68a4?auto=format&fit=crop&w=700&q=80" alt="Família planejando viagem" class="banner-family-img">
+                    </div>
+                    <div class="banner-text-content">
+                        <h4 class="banner-subhead">Últimos dias</h4>
+                        <h2 class="banner-mainhead">DA PROMOÇÃO</h2>
+                        <div class="banner-discount">
+                            Até <span class="discount-orange">55%</span> <span class="discount-off">OFF</span>
+                        </div>
+                        <div class="banner-installments">
+                            Em até <strong>12 x sem juros</strong>
+                        </div>
+                        <button type="button" class="btn-ver-ofertas-pill" id="btn-promo-banner-ofertas">VER OFERTAS</button>
+                    </div>
+                </div>
+
+
+                <div class="passagens-deal-card">
+                    <div class="deal-plane-img-box">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80" alt="Voo nacional pôr do sol" class="deal-plane-img">
+                    </div>
+                    <div class="deal-text-content">
+                        <div class="deal-tag-header">
+                            <span class="deal-tag-white">PASSAGENS</span>
+                            <span class="deal-tag-orange">NACIONAIS</span>
+                        </div>
+                        <div class="deal-subtext">Ida e volta</div>
+                        <div class="deal-subtext-sub">voos diretos</div>
+                        
+                        <div class="deal-price-box">
+                            <span class="deal-from">A partir de</span>
+                            <div class="deal-price-large">4X R$ 82</div>
+                            <span class="deal-total">Total por pessoa: R$ 328</span>
+                        </div>
+
+                        <button type="button" class="btn-ver-ofertas-pill btn-deal-search" data-dest="Rio de Janeiro">VER OFERTAS</button>
+                    </div>
+                </div>
+
+
+                <div class="passagens-deal-card">
+                    <div class="deal-plane-img-box">
+                        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=600&q=80" alt="Voo sobre as nuvens" class="deal-plane-img">
+                    </div>
+                    <div class="deal-text-content">
+                        <div class="deal-tag-header">
+                            <span class="deal-tag-white">PASSAGENS</span>
+                            <span class="deal-tag-orange">NACIONAIS</span>
+                        </div>
+                        <div class="deal-subtext">Ida e volta</div>
+                        <div class="deal-subtext-sub">voos diretos</div>
+                        
+                        <div class="deal-price-box">
+                            <span class="deal-from">A partir de</span>
+                            <div class="deal-price-large">4X R$ 82</div>
+                            <span class="deal-total">Total por pessoa: R$ 328</span>
+                        </div>
+
+                        <button type="button" class="btn-ver-ofertas-pill btn-deal-search" data-dest="Salvador">VER OFERTAS</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="passagens-results-section" id="passagens-results-section" style="display: none;">
+                <div class="results-header-bar">
+                    <h3 class="section-title"><i class="fa-solid fa-plane-departure"></i> Voos Disponíveis</h3>
+                    <button type="button" class="btn-close-results" id="btn-close-passagens-results">&times; Fechar busca</button>
+                </div>
+                <div class="results-cards-grid" id="passagens-flights-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hospedagem -->
+    <section class="main-view-section" id="view-hospedagem" style="display: none;">
+        <div class="view-container">
+            <div class="hospedagem-slate-frame">
+                <div class="hospedagem-layout">
+                    
+
+                    <aside class="hospedagem-sidebar">
+                        <div class="map-preview-card" id="btn-open-map">
+                            <div class="map-bg-thumbnail"></div>
+                            <button type="button" class="btn-ver-mapa">
+                                <i class="fa-solid fa-location-dot"></i> Ver no mapa
+                            </button>
+                        </div>
+
+                        <div class="hospedagem-filters-card">
+                            <div class="filters-card-header">
+                                <h4>Filtrar por:</h4>
+                                <i class="fa-solid fa-filter"></i>
+                            </div>
+
+                            <div class="filter-options-list">
+                                <label class="filter-check-item">
+                                    <input type="checkbox" class="hosp-amenity-filter" value="cafe">
+                                    <span class="custom-checkbox"></span>
+                                    <span>Café da manhã</span>
+                                </label>
+
+                                <label class="filter-check-item">
+                                    <input type="checkbox" class="hosp-amenity-filter" value="estacionamento">
+                                    <span class="custom-checkbox"></span>
+                                    <span>Estacionamento</span>
+                                </label>
+
+                                <label class="filter-check-item">
+                                    <input type="checkbox" class="hosp-amenity-filter" value="piscina">
+                                    <span class="custom-checkbox"></span>
+                                    <span>Piscina</span>
+                                </label>
+
+                                <label class="filter-check-item">
+                                    <input type="checkbox" class="hosp-amenity-filter" value="recepcao">
+                                    <span class="custom-checkbox"></span>
+                                    <span>Recepção 24h</span>
+                                </label>
+                            </div>
+                        </div>
+                    </aside>
+
+
+                    <main class="hospedagem-main-list" id="hospedagem-hotel-list">
+
+                    </main>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promoções -->
+    <section class="main-view-section" id="view-promocoes" style="display: none;">
+        <div class="view-container">
+            <div class="promocoes-carousel-header">
+                <div>
+                    <h3 class="promocoes-main-title"><i class="fa-solid fa-percent" style="color: #ea580c;"></i> Pacotes e Passagens em Oferta</h3>
+                    <p class="promocoes-main-sub">Ofertas exclusivas com voos diretos, parcelamento sem juros e desconto de até 5% no PIX</p>
+                </div>
+            </div>
+
+            <div class="promocoes-carousel-wrapper">
+                <button type="button" class="btn-promo-nav btn-promo-prev" id="btn-promo-prev" aria-label="Promoção anterior">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <div class="promocoes-carousel-viewport" id="promocoes-carousel-viewport">
+                    <div class="promocoes-carousel-track" id="promocoes-carousel-track">
+
+                    </div>
+                </div>
+
+                <button type="button" class="btn-promo-nav btn-promo-next" id="btn-promo-next" aria-label="Próxima promoção">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="promocoes-carousel-dots" id="promocoes-carousel-dots"></div>
+        </div>
+    </section>
+
+    <!-- Detalhes da viagem -->
+    <section class="main-view-section" id="view-detalhes" style="display: none;">
+        <div class="view-container detalhes-container">
+            
+
+            <div class="detalhes-top-bar">
+                <button type="button" class="btn-voltar-promos" id="btn-voltar-promos">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar para Promoções
+                </button>
+                <div class="detalhes-breadcrumb">
+                    <a href="index.html#home"><i class="fa-solid fa-house"></i> Home</a> / 
+                    <a href="index.html#promocoes" id="link-breadcrumb-promo">Promoções</a> / 
+                    <span id="detalhes-bc-title">Rio de Janeiro</span>
+                </div>
+            </div>
+
+
+            <div class="detalhes-hero-card">
+                <img id="detalhes-img-banner" src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?auto=format&fit=crop&w=1200&q=80" alt="Foto do Destino" class="detalhes-banner-img">
+                <div class="detalhes-hero-overlay"></div>
+                <div class="detalhes-floating-badges">
+                    <span class="badge-pill badge-airline" id="detalhes-badge-airline"><i class="fa-solid fa-plane"></i> Voando Gol</span>
+                    <span class="badge-pill badge-type" id="detalhes-badge-type">Passagem Aérea</span>
+                    <span class="badge-pill badge-discount" id="detalhes-badge-discount"><i class="fa-solid fa-bolt"></i> 5% OFF no PIX</span>
+                </div>
+            </div>
+
+
+            <div class="detalhes-grid-layout">
+                
+
+                <div class="detalhes-content-col">
+                    
+                    <div class="detalhes-main-card">
+                        <div class="detalhes-header-info">
+                            <span class="detalhes-category-tag" id="detalhes-cat-tag">Passagem Aérea Promocional</span>
+                            <h1 class="detalhes-title" id="detalhes-main-title">Rio de Janeiro</h1>
+                            <p class="detalhes-subtitle" id="detalhes-main-sub">Voando Gol com voo direto e taxas inclusas</p>
+                            
+                            <div class="detalhes-stars-score">
+                                <span class="stars-gold" id="detalhes-stars">
+                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                                </span>
+                                <span class="score-text"><strong>4.9</strong> / 5.0 • Excelente (mais de 280 viajantes avaliaram)</span>
+                            </div>
+                        </div>
+
+                        <div class="detalhes-separator"></div>
+
+
+                        <h3 class="section-subheading"><i class="fa-solid fa-plane-departure" style="color: #ea580c;"></i> Informações de Voo & Rota</h3>
+                        <div class="flight-route-box">
+                            <div class="flight-route-header">
+                                <div class="route-city">
+                                    <span class="city-label">Origem</span>
+                                    <strong id="detalhes-origem-name">São Paulo (SAO)</strong>
+                                    <span class="airport-detail">Aeroporto de Congonhas / Guarulhos</span>
+                                </div>
+                                <div class="route-flight-path">
+                                    <span class="flight-duration" id="detalhes-flight-duration">Voo Direto • 1h 10m</span>
+                                    <div class="flight-line-indicator">
+                                        <i class="fa-solid fa-circle origin-dot"></i>
+                                        <div class="dashed-line"></div>
+                                        <i class="fa-solid fa-plane plane-icon"></i>
+                                        <div class="dashed-line"></div>
+                                        <i class="fa-solid fa-location-dot dest-dot"></i>
+                                    </div>
+                                    <span class="flight-status-tag">Saída Confirmada</span>
+                                </div>
+                                <div class="route-city text-right">
+                                    <span class="city-label">Destino</span>
+                                    <strong id="detalhes-destino-name">Rio de Janeiro (RIO)</strong>
+                                    <span class="airport-detail">Santos Dumont / Galeão</span>
+                                </div>
+                            </div>
+
+                            <div class="flight-quick-meta-grid">
+                                <div class="quick-meta-item">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <div>
+                                        <small>Data de Ida</small>
+                                        <strong id="detalhes-data-ida">05/09/2026</strong>
+                                    </div>
+                                </div>
+                                <div class="quick-meta-item">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <div>
+                                        <small>Data de Retorno</small>
+                                        <strong id="detalhes-data-volta">12/09/2026</strong>
+                                    </div>
+                                </div>
+                                <div class="quick-meta-item">
+                                    <i class="fa-solid fa-suitcase-rolling"></i>
+                                    <div>
+                                        <small>Franquia de Bagagem</small>
+                                        <strong id="detalhes-bagagem-info">Bagagem de mão (10kg) inclusa</strong>
+                                    </div>
+                                </div>
+                                <div class="quick-meta-item">
+                                    <i class="fa-solid fa-couch"></i>
+                                    <div>
+                                        <small>Classe da Cabine</small>
+                                        <strong>Econômica com Marcação</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <h3 class="section-subheading"><i class="fa-solid fa-shield-heart" style="color: #16a34a;"></i> O que está incluso nesta viagem</h3>
+                        <div class="inclusions-grid" id="detalhes-inclusions-grid">
+
+                        </div>
+
+
+                        <h3 class="section-subheading"><i class="fa-solid fa-compass" style="color: #2563eb;"></i> Sobre o Destino & Atrativos</h3>
+                        <div class="destination-about-box">
+                            <p id="detalhes-about-text">
+                                O Rio de Janeiro é mundialmente conhecido por suas paisagens naturais deslumbrantes, praias famosas como Copacabana e Ipanema, o imponente Cristo Redentor no alto do Corcovado e o Pão de Açúcar com sua vista panorâmica da Baía de Guanabara. Uma cidade vibrante que combina cultura, música, gastronomia e cenários de tirar o fôlego.
+                            </p>
+                            <div class="attractions-pills" id="detalhes-attractions-pills">
+                                <span class="attraction-pill"><i class="fa-solid fa-camera"></i> Cristo Redentor</span>
+                                <span class="attraction-pill"><i class="fa-solid fa-mountain"></i> Pão de Açúcar</span>
+                                <span class="attraction-pill"><i class="fa-solid fa-umbrella-beach"></i> Praia de Copacabana</span>
+                                <span class="attraction-pill"><i class="fa-solid fa-sun"></i> Pôr do Sol no Arpoador</span>
+                                <span class="attraction-pill"><i class="fa-solid fa-landmark"></i> Arcos da Lapa & Santa Teresa</span>
+                            </div>
+                        </div>
+
+
+                        <h3 class="section-subheading"><i class="fa-solid fa-map-location-dot" style="color: #d97706;"></i> Roteiro Sugerido</h3>
+                        <div class="itinerary-timeline" id="detalhes-itinerary-list">
+                            <div class="itinerary-step">
+                                <div class="step-badge">Dia 1</div>
+                                <div class="step-content">
+                                    <strong>Chegada ao Rio e Pôr do Sol</strong>
+                                    <p>Desembarque no aeroporto, transfer até o hotel e fim de tarde relaxante na Praia de Ipanema com aplausos ao pôr do sol no Arpoador.</p>
+                                </div>
+                            </div>
+                            <div class="itinerary-step">
+                                <div class="step-badge">Dia 2</div>
+                                <div class="step-content">
+                                    <strong>Maravilhas do Corcovado</strong>
+                                    <p>Subida de trem pela Floresta da Tijuca até o Cristo Redentor com vista 360° de toda a capital fluminense.</p>
+                                </div>
+                            </div>
+                            <div class="itinerary-step">
+                                <div class="step-badge">Dia 3</div>
+                                <div class="step-content">
+                                    <strong>Pão de Açúcar & Praia Vermelha</strong>
+                                    <p>Passeio clássico no Bondinho do Pão de Açúcar, caminhada pela charmosa Urca e gastronomia carioca tradicional.</p>
+                                </div>
+                            </div>
+                            <div class="itinerary-step">
+                                <div class="step-badge">Dia 4</div>
+                                <div class="step-content">
+                                    <strong>Cultura Carioca e Retorno</strong>
+                                    <p>Visita ao Museu do Amanhã, Arcos da Lapa, Escadaria Selarón e transfer ao aeroporto para embarque de regresso.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="detalhes-sidebar-col">
+                    <div class="booking-sticky-card">
+                        <div class="booking-card-header">
+                            <span class="booking-tag">Oferta Especial Sabiá</span>
+                            <div class="booking-price-box">
+                                <span class="price-from-label">A partir de</span>
+                                <div class="booking-price-value" id="detalhes-sidebar-price">R$ 380,00</div>
+                                <div class="booking-installments-text" id="detalhes-sidebar-installments">em até 4x de R$ 95,00 sem juros</div>
+                            </div>
+                        </div>
+
+                        <div class="booking-pix-banner" id="detalhes-sidebar-pix">
+                            <i class="fa-solid fa-bolt"></i>
+                            <div>
+                                <strong id="detalhes-sidebar-pix-val">R$ 361,00 no PIX</strong>
+                                <small>Economia de 5% no pagamento à vista</small>
+                            </div>
+                        </div>
+
+                        <div class="booking-coupon-box" id="detalhes-sidebar-coupon-box">
+                            <div class="coupon-tag-head">
+                                <i class="fa-solid fa-ticket"></i>
+                                <span>Cupom Promocional Recomendado:</span>
+                            </div>
+                            <div class="coupon-code-pill" id="detalhes-sidebar-coupon">RIO20</div>
+                            <div class="coupon-saving-note" id="detalhes-sidebar-coupon-saving">Economize R$ 80,00 no carrinho!</div>
+                        </div>
+
+                        <div class="booking-form-selectors">
+                            <div class="selector-group">
+                                <label><i class="fa-solid fa-user-group"></i> Viajantes</label>
+                                <select class="booking-select" id="detalhes-select-passengers">
+                                    <option value="1" selected>1 Adulto</option>
+                                    <option value="2">2 Adultos (Casal)</option>
+                                    <option value="3">3 Viajantes</option>
+                                    <option value="4">4 Viajantes (Família)</option>
+                                </select>
+                            </div>
+
+                            <div class="selector-group">
+                                <label><i class="fa-solid fa-plane"></i> Opção de Voo</label>
+                                <select class="booking-select" id="detalhes-select-flight-option">
+                                    <option value="direto" selected>Voo Direto Incluso (Melhor Tarifa)</option>
+                                    <option value="flexivel">Voo Flexível (+ R$ 50)</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <button type="button" class="btn-detalhes-comprar" id="btn-detalhes-adicionar-carrinho">
+                            <i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho
+                        </button>
+
+                        <button type="button" class="btn-detalhes-voltar-sidebar" id="btn-detalhes-voltar-sidebar">
+                            <i class="fa-solid fa-arrow-left"></i> Continuar Explorando
+                        </button>
+
+                        <div class="booking-security-badges">
+                            <span><i class="fa-solid fa-shield-halved" style="color: #16a34a;"></i> Compra 100% Protegida</span>
+                            <span><i class="fa-solid fa-clock-rotate-left" style="color: #2563eb;"></i> Cancelamento Grátis 24h</span>
+                            <span><i class="fa-solid fa-ticket" style="color: #ea580c;"></i> Emissão Imediata</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Home -->
+    <section class="main-view-section active" id="view-home">
+        <div class="view-container">
+            <div class="promo-container">
+                <h3 class="section-title"><i class="fa-solid fa-fire"></i> Ofertas Imbatíveis da Semana</h3>
+                
+                <div class="carousel-wrapper">
+                    <button class="carousel-nav prev" id="carousel-prev" aria-label="Anterior">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <div class="promo-card" id="promo-card">
+                        <div class="card-image-wrapper">
+                            <img id="card-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Hotel Cancún" class="hotel-img">
+                            <span class="badge-exclusive">Destaque Sabiá</span>
+                        </div>
+                        
+                        <div class="card-content">
+                            <div class="hotel-info">
+                                <span class="category-label" id="card-type">Hotel All Inclusive</span>
+                                <h2 class="hotel-title" id="card-title">Cancún</h2>
+                                <div class="stars-rating" id="card-stars">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <p class="hotel-sub" id="card-sub">Viagem para cancun - tudo incluso com voo + hospedagem e traslados</p>
+                                
+                                <div class="amenities-list">
+                                    <span><i class="fa-solid fa-utensils"></i> Pensão Completa</span>
+                                    <span><i class="fa-solid fa-wifi"></i> Wi-Fi Grátis</span>
+                                    <span><i class="fa-solid fa-water-ladder"></i> Piscina com Borda Infinita</span>
+                                </div>
+                            </div>
+
+                            <div class="pricing-info">
+                                <span class="price-start">Diária a partir de</span>
+                                <span class="badge-sem-juros">Sem juros</span>
+                                
+                                <div class="price-main">
+                                    <span class="installments" id="card-installments">6X R$</span>
+                                    <span class="price-big" id="card-price">206</span>
+                                </div>
+                                
+                                <span class="price-total" id="card-total">Total: R$ 1.234</span>
+                                
+                                <div class="badge-pix" id="card-pix">ou até 3% OFF no PIX</div>
+                                
+                                <div class="coupon-badge">
+                                    <span class="coupon-text">Cupom até: <strong id="card-coupon-val">R$ 500</strong></span>
+                                    <span class="coupon-code" id="card-coupon">KRYSTAL10</span>
+                                </div>
+
+                                <button class="btn-comprar-promo">Garantir Oferta <i class="fa-solid fa-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="carousel-nav next" id="carousel-next" aria-label="Próximo">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="highlights-grid-section">
+                    <h3 class="section-subtitle">Mais Destinos Populares</h3>
+                    <div class="highlights-grid" id="highlights-grid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mapa de hospedagens -->
+    <div class="modal-overlay" id="map-modal-overlay">
+        <div class="map-modal-card">
+            <button class="btn-close-map" id="btn-close-map">&times;</button>
+            <div class="map-modal-header">
+                <div class="map-modal-title-box">
+                    <h3><i class="fa-solid fa-map-location-dot" style="color: #ea580c;"></i> Mapa de Hospedagens e Tarifas</h3>
+                    <span class="map-modal-sub">Explore as acomodações parceiras no mapa e reserve diretamente</span>
+                </div>
+                <div class="map-city-filter-box">
+                    <label for="map-filter-city">Cidade:</label>
+                    <select id="map-filter-city" class="map-city-select">
+                        <option value="todos">Todas as Cidades</option>
+                        <option value="São Francisco">São Francisco (EUA)</option>
+                        <option value="Rio de Janeiro">Rio de Janeiro (Brasil)</option>
+                        <option value="Cancún">Cancún (México)</option>
+                        <option value="Paris">Paris (França)</option>
+                        <option value="Orlando">Orlando (EUA)</option>
+                        <option value="Salvador">Salvador (Brasil)</option>
+                        <option value="Gramado">Gramado (Brasil)</option>
+                        <option value="São Paulo">São Paulo (Brasil)</option>
+                        <option value="Lisboa">Lisboa (Portugal)</option>
+                        <option value="Bariloche">Bariloche (Argentina)</option>
+                        <option value="Nova York">Nova York (EUA)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="map-viewport-container">
+                <div id="hotel-leaflet-map" class="hotel-leaflet-map"></div>
+
+                <div class="map-hotel-preview-banner" id="map-hotel-preview-banner">
+                    <img id="map-preview-img" src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=300&q=80" alt="Hotel" class="map-preview-thumb">
+                    <div class="map-preview-info">
+                        <h4 id="map-preview-title">FOUND Hotel Carlton, Nob Hill</h4>
+                        <div id="map-preview-city" class="preview-loc">São Francisco, Estados Unidos • ★★★★★</div>
+                        <div class="preview-amenities" id="map-preview-amenities">Wi-Fi Grátis • Café da manhã • Piscina • Recepção 24h</div>
+                    </div>
+                    <div class="map-preview-price-action">
+                        <div class="preview-price-box">
+                            <span class="price-from">Diária por pessoa</span>
+                            <strong id="map-preview-price">R$ 618</strong>
+                        </div>
+                        <button type="button" class="btn-map-book" id="btn-map-book-hotel">Reservar Hospedagem</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+        <section class="institucional-sabia" id="institucional-sabia" aria-labelledby="sabiainst-title">
+        <div class="institucional-container">
+            <div class="inst-intro"><span class="inst-eyebrow">CONHEÇA O SABIÁ VIAGENS</span>
+                <h2 id="sabiainst-title">Seu próximo destino começa com um caminho mais simples.</h2>
+                <p>Planeje passagens e hospedagens em uma única experiência. Tecnologia para aproximar você de novos lugares, sem complicar a jornada.</p>
+            </div>
+            <section class="inst-bloco" id="nossos-servicos">
+                <div class="inst-heading"><span class="inst-eyebrow">O QUE OFERECEMOS</span><h2>Nossos serviços</h2></div>
+                <div class="inst-grid inst-grid-dois">
+                    <a class="inst-card inst-service" href="index.html#passagens"><i class="fa-solid fa-plane-departure" aria-hidden="true"></i><h3>Passagens aéreas</h3><p>Consulte os voos presentes no catálogo e organize seus trechos.</p><span>Pesquisar voos ›</span></a>
+                    <a class="inst-card inst-service" href="index.html#hospedagem"><i class="fa-solid fa-hotel" aria-hidden="true"></i><h3>Hospedagens</h3><p>Explore hotéis disponíveis e conheça os detalhes antes de reservar.</p><span>Explorar hotéis ›</span></a>
+                </div>
+            </section>
+            <section class="inst-bloco" id="nossa-essencia">
+                <div class="inst-heading"><span class="inst-eyebrow">NOSSO PROPÓSITO</span><h2>A essência do Sabiá Viagens</h2><p>Simplificamos o planejamento, integrando voos e hospedagens no mesmo ambiente.</p></div>
+                <div class="inst-grid inst-grid-quatro">
+                    <article class="inst-card"><i class="fa-solid fa-check-circle"></i><h3>Simplicidade</h3><p>Menos etapas para encontrar o que importa.</p></article>
+                    <article class="inst-card"><i class="fa-solid fa-link"></i><h3>Integração</h3><p>Serviços de viagem reunidos e organizados.</p></article>
+                    <article class="inst-card"><i class="fa-solid fa-microchip"></i><h3>Tecnologia</h3><p>Recursos digitais para melhorar sua experiência.</p></article>
+                    <article class="inst-card"><i class="fa-solid fa-shield-halved"></i><h3>Segurança</h3><p>Clareza sobre as etapas do protótipo e seus dados locais.</p></article>
+                </div>
+            </section>
+            <section class="inst-bloco inst-historia" id="nossa-historia">
+                <div><span class="inst-eyebrow">AS NOSSAS RAÍZES</span><h2>Por que Sabiá?</h2>
+                    <p>O nome Sabiá Viagens foi inspirado no Parque do Sabiá, um dos símbolos de Uberlândia, cidade que faz parte da nossa origem. Assim como o pássaro representa orientação e liberdade, nossa proposta é utilizar a tecnologia para tornar o planejamento de cada viagem mais simples e conectado.</p>
+                </div><div class="inst-simbolo" aria-label="Origem em Uberlândia, Minas Gerais"><i class="fa-solid fa-dove" aria-hidden="true"></i><span>De Uberlândia para novos caminhos.</span></div>
+            </section>
+            <section class="inst-bloco inst-missao" id="nossa-missao"><span class="inst-eyebrow">NOSSA MISSÃO</span>
+                <h2>“Conectar pessoas aos seus destinos por meio da tecnologia, tornando o planejamento simples e eficiente.”</h2>
+                <p>Centralizar informações, reduzir burocracias, automatizar processos, melhorar a experiência dos viajantes e facilitar o turismo.</p>
+            </section>
+            <section class="inst-bloco" id="nossos-valores"><div class="inst-heading"><span class="inst-eyebrow">O QUE NOS MOVE</span><h2>Nossos valores</h2></div>
+                <div class="inst-grid inst-grid-valores">
+                    <article class="inst-valor"><i class="fa-solid fa-earth-americas"></i><h3>Conectar pessoas e destinos</h3><p>Facilitar conexões entre viajantes e serviços em um só ambiente.</p></article>
+                    <article class="inst-valor"><i class="fa-solid fa-handshake"></i><h3>Confiança em cada etapa</h3><p>Informações claras para uma navegação compreensível.</p></article>
+                    <article class="inst-valor"><i class="fa-solid fa-microchip"></i><h3>Inovação via tecnologia</h3><p>Recursos digitais para simplificar processos.</p></article>
+                    <article class="inst-valor"><i class="fa-solid fa-user-check"></i><h3>Centrado no usuário</h3><p>Uma plataforma pensada para as necessidades dos viajantes.</p></article>
+                    <article class="inst-valor"><i class="fa-solid fa-chart-line"></i><h3>Evolução contínua</h3><p>Melhorias incrementais com responsabilidade.</p></article>
+                </div>
+            </section>
+            <section class="inst-bloco inst-futuro" id="futuro-sabia">
+                <span class="inst-eyebrow">POSSIBILIDADES FUTURAS, AINDA NÃO DISPONÍVEIS</span>
+                <h2>O futuro do Sabiá Viagens</h2>
+                <div class="inst-grid inst-grid-tres">
+                    <div><h3>IA e Dados</h3><p>Explorar Inteligência Artificial e Ciência de Dados.</p></div>
+                    <div><h3>Personalização</h3><p>Planejar recomendações adequadas a diferentes viajantes.</p></div>
+                    <div><h3>Expansão</h3><p>Investigar novos serviços turísticos e meios de pagamento.</p></div>
+                </div>
+                <blockquote>“Viajar é descobrir novos caminhos. O Sabiá Viagens existe para tornar cada um deles mais simples, inteligente e inesquecível.”</blockquote>
+            </section>
+        </div>
+    </section>
+
+    <footer class="main-footer" id="rodape-sabia">
+        <div class="footer-container">
+            <div class="footer-col footer-col-brand">
+                <a class="logo marca-rodape footer-logo" href="index.html#home" aria-label="Sabiá Viagens, ir para a página inicial">
+                    <img src="marca/sabia-fundo-escuro.png" alt="Sabiá Viagens">
+                </a>
+                <p class="footer-desc">Conectamos pessoas aos seus destinos por meio da tecnologia, simplificando o planejamento de viagens.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#home">Início</a></li>
+                    <li><a href="index.html#passagens">Passagens aéreas</a></li>
+                    <li><a href="index.html#hospedagem">Hospedagens</a></li>
+                    <li><a href="index.html#promocoes">Destinos e destaques</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Sua experiência</h4>
+                <ul class="footer-links">
+                    <li><a href="carrinho.html">Carrinho e reservas simuladas</a></li>
+                    <li><a href="index.html#nossa-essencia">Nossa essência</a></li>
+                    <li><a href="index.html#nossa-historia">Nossa história</a></li>
+                    <li><a href="index.html#nossos-valores">Valores</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Sobre o projeto</h4>
+                <p class="footer-desc">Projeto integrador acadêmico de Desenvolvimento de Sistemas, IFTM. Catálogos e reservas demonstrativos, sem pagamentos reais.</p>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <div class="bottom-container"><span>© 2026 Sabiá Viagens · Projeto acadêmico</span><span>Plataforma demonstrativa</span></div>
+        </div>
+    </footer>
+
+    
+    <button type="button" class="btn-back-to-top" id="btn-back-to-top" title="Voltar ao topo" aria-label="Voltar para o topo">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    
+    <div class="modal-overlay" id="auth-modal-overlay">
+        <div class="auth-modal-card">
+            <button class="btn-close-auth" id="btn-close-auth">&times;</button>
+            
+            <div class="auth-logo-box">
+                <img src="marca/sabia-horizontal.png" alt="Sabiá Viagens" width="510" height="135">
+            </div>
+
+            <form class="auth-form active" id="form-login">
+                <div class="form-field">
+                    <label>CPF ou E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="login-cpf" autocomplete="username" placeholder="CPF ou e-mail cadastrado" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <div class="auth-field-header">
+                        <label>Senha</label>
+                        <a href="#" class="link-forgot-pass" id="link-to-forgot">Esqueci minha senha?</a>
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="login-senha" autocomplete="current-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Entrar</button>
+
+                <p class="auth-switch-text">
+                    Ainda não tem conta? <a href="#" id="link-to-register">Cadastre-se</a>
+                </p>
+            </form>
+
+            <form class="auth-form" id="form-register">
+                <div class="form-field">
+                    <label>Nome Completo</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="reg-nome" placeholder="Seu nome completo" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>CPF</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-id-card input-icon"></i>
+                        <input type="text" id="reg-cpf" inputmode="numeric" placeholder="000.000.000-00" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="reg-email" autocomplete="email" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="reg-senha" autocomplete="new-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="reg-tipo">Tipo de conta</label>
+                    <select id="reg-tipo" class="cadastro-select" required>
+                        <option value="CLIENTE">Cliente</option>
+                        <option value="SOLICITANTE_HOTEL">Responsável por hotel</option>
+                        <option value="SOLICITANTE_COMPANHIA">Responsável por companhia aérea</option>
+                    </select>
+                </div>
+                <div class="cadastro-parceiro" id="reg-campos-hotel" hidden>
+                    <p>Informe os dados do hotel. A gestão só será liberada após aprovação.</p>
+                    <label for="reg-hotel-nome">Nome do hotel</label><input id="reg-hotel-nome" type="text" maxlength="120">
+                    <label for="reg-hotel-cidade">Cidade</label><input id="reg-hotel-cidade" type="text" maxlength="90">
+                    <label for="reg-hotel-pais">País</label><input id="reg-hotel-pais" type="text" maxlength="90">
+                    <label for="reg-hotel-diaria">Diária de referência (R$)</label><input id="reg-hotel-diaria" type="number" min="0" step="0.01">
+                </div>
+                <div class="cadastro-parceiro" id="reg-campos-companhia" hidden>
+                    <p>Cadastre uma nova companhia. Não é possível assumir outra pelo nome.</p>
+                    <label for="reg-cia-nome">Nome da companhia</label><input id="reg-cia-nome" type="text" maxlength="120">
+                    <label for="reg-cia-iata">Código IATA</label><input id="reg-cia-iata" type="text" maxlength="3" placeholder="Ex.: AB">
+                    <label for="reg-cia-pais">País de origem</label><input id="reg-cia-pais" type="text" maxlength="90">
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Criar Conta</button>
+
+                <p class="auth-switch-text">
+                    Já possui uma conta? <a href="#" id="link-to-login">Faça Login</a>
+                </p>
+            </form>
+
+            <form class="auth-form" id="form-forgot">
+                <div style="text-align: center; margin-bottom: 8px;">
+                    <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 4px;">Recuperar Senha</h3>
+                    <p style="font-size: 12px; color: #64748b; margin: 0;">Informe seu CPF ou E-mail e crie uma nova senha de acesso.</p>
+                </div>
+
+                <div class="form-field">
+                    <label>CPF ou E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="text" id="forgot-ident" placeholder="seu@email.com ou 000.000.000-00" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Nova Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="forgot-senha" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Confirmar Nova Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-shield-halved input-icon"></i>
+                        <input type="password" id="forgot-senha-confirm" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Salvar Nova Senha</button>
+
+                <p class="auth-switch-text">
+                    Lembrou a senha? <a href="#" id="link-forgot-to-login">Voltar ao Login</a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+
+    <!-- Modal de detalhes -->
+    <div class="trip-modal-overlay" id="trip-modal-overlay">
+        <div class="trip-modal-card">
+            <button type="button" class="btn-close-trip-modal" id="btn-close-trip-modal" aria-label="Fechar">&times;</button>
+            
+            <div class="trip-modal-media">
+                <img id="trip-modal-img" src="" alt="Foto do Destino" class="trip-modal-cover">
+                <div class="trip-modal-floating-badges">
+                    <span class="trip-badge-airline" id="trip-modal-airline">Voando Latam</span>
+                    <span class="trip-badge-tag" id="trip-modal-tag"><i class="fa-solid fa-plane"></i> Voo Direto</span>
+                </div>
+            </div>
+
+            <div class="trip-modal-content">
+                <div class="trip-modal-header">
+                    <div class="trip-modal-category" id="trip-modal-type">Pacote Promocional</div>
+                    <h2 class="trip-modal-title" id="trip-modal-title">Santiago, Chile</h2>
+                    <p class="trip-modal-sub" id="trip-modal-sub">Voando Sky Airline com vista para os Andes</p>
+                    <div class="trip-modal-rating" id="trip-modal-rating">
+                        <span class="stars" id="trip-modal-stars-icons">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </span>
+                        <span class="score" id="trip-modal-score"><strong>4.9</strong> / 5.0 • Excelente (140+ avaliações)</span>
+                    </div>
+                </div>
+
+                <div class="trip-modal-divider"></div>
+
+                <div class="trip-modal-info-grid">
+                    <div class="trip-info-block">
+                        <span class="info-label"><i class="fa-solid fa-location-dot"></i> Origem</span>
+                        <strong id="trip-modal-origin">São Paulo (SAO)</strong>
+                    </div>
+                    <div class="trip-info-block">
+                        <span class="info-label"><i class="fa-solid fa-calendar-days"></i> Período / Saída</span>
+                        <strong id="trip-modal-date">Saída confirmada 2026</strong>
+                    </div>
+                    <div class="trip-info-block">
+                        <span class="info-label"><i class="fa-solid fa-suitcase-rolling"></i> Bagagem</span>
+                        <strong id="trip-modal-baggage">Mão + Despachada inclusa</strong>
+                    </div>
+                </div>
+
+                <div class="trip-modal-amenities-box">
+                    <h4 class="amenities-heading"><i class="fa-solid fa-circle-check" style="color: #16a34a;"></i> O que está incluso nesta viagem:</h4>
+                    <ul class="trip-amenities-list" id="trip-modal-amenities">
+
+                    </ul>
+                </div>
+
+                <div class="trip-modal-pricing-card">
+                    <div class="pricing-card-left">
+                        <span class="price-from-label">Preço por pessoa a partir de</span>
+                        <div class="price-main-val" id="trip-modal-price">R$ 790,00</div>
+                        <div class="price-installments-txt" id="trip-modal-installments">em até 6x de R$ 131,00 sem juros</div>
+                        <div class="price-pix-badge" id="trip-modal-pix"><i class="fa-solid fa-bolt"></i> <strong>R$ 750,50</strong> à vista no PIX (5% OFF)</div>
+                    </div>
+                    <div class="pricing-card-right" id="trip-modal-coupon-section">
+                        <div class="coupon-box-pill">
+                            <i class="fa-solid fa-ticket"></i> Cupom: <strong id="trip-modal-coupon-code">CHILE15</strong>
+                        </div>
+                        <span class="coupon-desc-txt" id="trip-modal-coupon-desc">Desconto extra no checkout!</span>
+                    </div>
+                </div>
+
+                <div class="trip-modal-actions">
+                    <button type="button" class="btn-trip-secondary" id="btn-cancel-trip-modal">
+                        Continuar Vendo
+                    </button>
+                    <button type="button" class="btn-trip-primary" id="btn-add-trip-to-cart">
+                        <i class="fa-solid fa-cart-shopping"></i> Adicionar ao Carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="results-overlay" id="results-overlay">
+        <div class="results-card">
+            <div class="results-header">
+                <h3><i class="fa-solid fa-plane-departure"></i> Vôos e Pacotes Encontrados</h3>
+                <button class="btn-close-results" id="btn-close-results">&times;</button>
+            </div>
+            
+            <div class="results-summary-bar" id="results-summary-bar"></div>
+            <div class="results-list" id="results-list"></div>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="cidades-ibge.js"></script>
+    <script src="busca-localidades.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

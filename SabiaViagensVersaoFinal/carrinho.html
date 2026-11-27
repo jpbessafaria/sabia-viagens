@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="marca/sabia-icone.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Seu Carrinho de Compras</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="carrinho.css">
+</head>
+<body id="carrinho-page">
+
+    
+    <header class="top-header">
+        <div class="header-container">
+            <a href="index.html" class="logo marca-cabecalho" style="text-decoration: none;">
+                    <img src="marca/sabia-horizontal.png" alt="Sabiá Viagens">
+            </a>
+            
+            <div class="header-actions">
+                
+                <div class="auth-wrapper" id="auth-wrapper">
+                    <button class="btn-login" id="btn-login-trigger">
+                        <i class="fa-regular fa-user-circle" id="user-icon-logged"></i>
+                        <span id="login-label">Fazer Login</span>
+                    </button>
+                    
+                    <div class="user-dropdown-menu" id="user-dropdown-menu">
+                        <div class="user-menu-header">
+                            <strong id="user-full-name">Carlos Silva</strong>
+                            <span id="user-email-disp">carlos@email.com</span>
+                        </div>
+                        <div class="menu-divider"></div>
+
+                        <a href="carrinho.html" class="user-menu-item"><i class="fa-solid fa-plane-ticket"></i> Minhas Viagens</a>
+                        <a href="#" class="user-menu-item"><i class="fa-solid fa-heart"></i> Favoritos</a>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="user-menu-item btn-logout" id="btn-logout"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+                    </div>
+                </div>
+
+                <button class="btn-cart" id="btn-cart-trigger" aria-label="Carrinho" onclick="window.location.href='carrinho.html'">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html#home" class="nav-item">
+                <div class="icon-box"><i class="fa-solid fa-house"></i></div>
+                <span>Home</span>
+            </a>
+            <a href="index.html#passagens" class="nav-item">
+                <div class="icon-box"><i class="fa-solid fa-plane"></i></div>
+                <span>Passagens</span>
+            </a>
+            <a href="index.html#hospedagem" class="nav-item">
+                <div class="icon-box"><i class="fa-solid fa-bed"></i></div>
+                <span>Hospedagem</span>
+            </a>
+            <a href="index.html#promocoes" class="nav-item">
+                <div class="icon-box"><i class="fa-solid fa-percent"></i></div>
+                <span>Promoções</span>
+            </a>
+        </div>
+    </nav>
+
+    
+    <main class="cart-page-wrapper">
+        
+        <div class="cart-breadcrumb">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a> / <span>Carrinho de Compras</span>
+        </div>
+
+        
+        <div class="cart-page-title-box">
+            <h1><i class="fa-solid fa-cart-shopping" style="color: #ea580c;"></i> Seu Carrinho de Compras</h1>
+            <span class="cart-item-count-badge" id="page-cart-count">0 itens</span>
+        </div>
+
+        
+        <div class="cart-grid">
+            
+            
+            <div class="cart-items-column" id="cart-items-column">
+                
+            </div>
+
+            
+            <div class="cart-summary-column">
+                <div class="cart-summary-card">
+                    <h3 class="cart-summary-title">Resumo do Pedido</h3>
+                    
+                    <div class="cart-summary-row">
+                        <span>Subtotal dos serviços</span>
+                        <strong id="cart-subtotal">R$ 0,00</strong>
+                    </div>
+
+                    <div class="cart-summary-row discount-row" id="cart-discount-row" style="display: none;">
+                        <span>Desconto (Cupom)</span>
+                        <strong id="cart-discount-val">- R$ 0,00</strong>
+                    </div>
+
+                    <div class="cart-coupon-section">
+                        <label style="font-size: 12px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Cupom de Desconto</label>
+                        <div class="cart-coupon-box">
+                            <input type="text" class="cart-coupon-input" id="cart-coupon-input" placeholder="Ex: SABIA10" autocomplete="off">
+                            <button type="button" class="btn-apply-coupon" id="btn-apply-coupon">Aplicar</button>
+                        </div>
+                        <div id="coupon-feedback" style="font-size: 12px; font-weight: 600; margin-top: 4px;"></div>
+                    </div>
+
+                    <div class="cart-summary-divider"></div>
+
+                    <div class="cart-summary-total">
+                        <span class="total-label">Total a pagar:</span>
+                        <span class="total-price" id="cart-total-price">R$ 0,00</span>
+                    </div>
+
+                    <div class="pix-badge-notice">
+                        <i class="fa-solid fa-pix"></i> PIX e cartão disponíveis para simulação
+                    </div>
+
+                    <button type="button" class="btn-checkout" id="btn-checkout">
+                        <span>Ir para o checkout</span>
+                        <i class="fa-solid fa-lock"></i>
+                    </button>
+
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    
+    <footer class="main-footer" id="rodape-sabia">
+        <div class="footer-container">
+            <div class="footer-col footer-col-brand">
+                <a class="logo marca-rodape footer-logo" href="index.html#home" aria-label="Sabiá Viagens, ir para a página inicial">
+                    <img src="marca/sabia-fundo-escuro.png" alt="Sabiá Viagens">
+                </a>
+                <p class="footer-desc">Conectamos pessoas aos seus destinos por meio da tecnologia, simplificando o planejamento de viagens.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Explore</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html#home">Início</a></li>
+                    <li><a href="index.html#passagens">Passagens aéreas</a></li>
+                    <li><a href="index.html#hospedagem">Hospedagens</a></li>
+                    <li><a href="index.html#promocoes">Destinos e destaques</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Sua experiência</h4>
+                <ul class="footer-links">
+                    <li><a href="carrinho.html">Carrinho e reservas simuladas</a></li>
+                    <li><a href="index.html#nossa-essencia">Nossa essência</a></li>
+                    <li><a href="index.html#nossa-historia">Nossa história</a></li>
+                    <li><a href="index.html#nossos-valores">Valores</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-col-title">Sobre o projeto</h4>
+                <p class="footer-desc">Projeto integrador acadêmico de Desenvolvimento de Sistemas, IFTM. Catálogos e reservas demonstrativos, sem pagamentos reais.</p>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <div class="bottom-container"><span>© 2026 Sabiá Viagens · Projeto acadêmico</span><span>Plataforma demonstrativa</span></div>
+        </div>
+    </footer>
+
+    
+    <button type="button" class="btn-back-to-top" id="btn-back-to-top" title="Voltar ao topo" aria-label="Voltar para o topo">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    
+    <div class="modal-overlay" id="auth-modal-overlay">
+        <div class="auth-modal-card">
+            <button class="btn-close-auth" id="btn-close-auth">&times;</button>
+            
+            <div class="auth-logo-box">
+                <img src="marca/sabia-horizontal.png" alt="Sabiá Viagens" width="510" height="135">
+            </div>
+
+            <form class="auth-form active" id="form-login">
+                <div class="form-field">
+                    <label>CPF ou E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="login-cpf" autocomplete="username" placeholder="CPF ou e-mail cadastrado" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <div class="auth-field-header">
+                        <label>Senha</label>
+                        <a href="#" class="link-forgot-pass" id="link-to-forgot">Esqueci minha senha?</a>
+                    </div>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="login-senha" autocomplete="current-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Entrar</button>
+
+                <p class="auth-switch-text">
+                    Ainda não tem conta? <a href="#" id="link-to-register">Cadastre-se</a>
+                </p>
+            </form>
+
+            <form class="auth-form" id="form-register">
+                <div class="form-field">
+                    <label>Nome Completo</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-user input-icon"></i>
+                        <input type="text" id="reg-nome" placeholder="Seu nome completo" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>CPF</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-id-card input-icon"></i>
+                        <input type="text" id="reg-cpf" inputmode="numeric" placeholder="000.000.000-00" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="email" id="reg-email" autocomplete="email" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="reg-senha" autocomplete="new-password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="reg-tipo">Tipo de conta</label>
+                    <select id="reg-tipo" class="cadastro-select" required>
+                        <option value="CLIENTE">Cliente</option>
+                        <option value="SOLICITANTE_HOTEL">Responsável por hotel</option>
+                        <option value="SOLICITANTE_COMPANHIA">Responsável por companhia aérea</option>
+                    </select>
+                </div>
+                <div class="cadastro-parceiro" id="reg-campos-hotel" hidden>
+                    <p>Informe os dados do hotel. A gestão só será liberada após aprovação.</p>
+                    <label for="reg-hotel-nome">Nome do hotel</label><input id="reg-hotel-nome" type="text" maxlength="120">
+                    <label for="reg-hotel-cidade">Cidade</label><input id="reg-hotel-cidade" type="text" maxlength="90">
+                    <label for="reg-hotel-pais">País</label><input id="reg-hotel-pais" type="text" maxlength="90">
+                    <label for="reg-hotel-diaria">Diária de referência (R$)</label><input id="reg-hotel-diaria" type="number" min="0" step="0.01">
+                </div>
+                <div class="cadastro-parceiro" id="reg-campos-companhia" hidden>
+                    <p>Cadastre uma nova companhia. Não é possível assumir outra pelo nome.</p>
+                    <label for="reg-cia-nome">Nome da companhia</label><input id="reg-cia-nome" type="text" maxlength="120">
+                    <label for="reg-cia-iata">Código IATA</label><input id="reg-cia-iata" type="text" maxlength="3" placeholder="Ex.: AB">
+                    <label for="reg-cia-pais">País de origem</label><input id="reg-cia-pais" type="text" maxlength="90">
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Criar Conta</button>
+
+                <p class="auth-switch-text">
+                    Já possui uma conta? <a href="#" id="link-to-login">Faça Login</a>
+                </p>
+            </form>
+
+            <form class="auth-form" id="form-forgot">
+                <div style="text-align: center; margin-bottom: 8px;">
+                    <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; margin: 0 0 4px;">Recuperar Senha</h3>
+                    <p style="font-size: 12px; color: #64748b; margin: 0;">Informe seu CPF ou E-mail e crie uma nova senha de acesso.</p>
+                </div>
+
+                <div class="form-field">
+                    <label>CPF ou E-mail</label>
+                    <div class="input-with-icon">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="text" id="forgot-ident" placeholder="seu@email.com ou 000.000.000-00" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Nova Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-lock input-icon"></i>
+                        <input type="password" id="forgot-senha" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label>Confirmar Nova Senha</label>
+                    <div class="input-with-icon">
+                        <i class="fa-solid fa-shield-halved input-icon"></i>
+                        <input type="password" id="forgot-senha-confirm" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth-submit">Salvar Nova Senha</button>
+
+                <p class="auth-switch-text">
+                    Lembrou a senha? <a href="#" id="link-forgot-to-login">Voltar ao Login</a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

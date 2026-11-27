@@ -1,0 +1,8 @@
+/* Folhas de estilo do site */
+
+@import url('global.css');
+@import url('home.css');
+@import url('detalhes.css');
+@import url('carrinho.css');
+@import url('admin.css');
+@import url('esqueci-senha.css');
